@@ -31,6 +31,7 @@
 ![vaP0fUyPxb](https://github.com/user-attachments/assets/beeb8b03-41d7-4abd-bbbb-5db30a76db73)
 
 #sitio funcionando
-![11EPKzG1gg](https://github.com/user-attachments/assets/507d20b8-31dc-40e0-bd72-6b0b9b9eaba4)
+![e1Zx3nc6iS](https://github.com/user-attachments/assets/e8d8a603-7e86-4046-86dc-44fe8f9fd4c3)
+![1bMz4kKnNX](https://github.com/user-attachments/assets/07b951d1-f70c-4d71-94db-a061c4219c00)
 
-![czUHpDTfVE](https://github.com/user-attachments/assets/15382cbb-84eb-4c82-b621-20a84575dbe1)
+
