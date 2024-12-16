@@ -9,7 +9,8 @@
 
 
 # Creacion del dominio
-![JmwdqHcD0h](https://github.com/user-attachments/assets/69d356df-863d-496b-9a88-7817df4d0d24)
+![image](https://github.com/user-attachments/assets/cbb79428-d05b-47f2-ae00-1a6725c3987b)
+
 
 # df -h
 ![image](https://github.com/user-attachments/assets/7f7a70d7-8457-4af0-99ad-206be5934fd3)
