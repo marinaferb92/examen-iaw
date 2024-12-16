@@ -1,0 +1,3 @@
+
+/var/www/html FRONTEND_NETWORK(rw,sync,no_root_squash,no_subtree_check)
+/var/moodledata FRONTEND_NETWORK(rw,sync,no_root_squash,no_subtree_check)
