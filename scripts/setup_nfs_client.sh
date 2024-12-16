@@ -13,5 +13,8 @@ apt update
 #instalar el cliente nfs
 apt install nfs-common -y
 
-sudo mount $IP_NFS_SERVER:/var/www/html /var/www/html  #comprobamos con df -h
-sudo mount $IP_NFS_SERVER:/var/moodledata /var/moodledata
+sudo mount $NFS_SERVER_IP:/var/www/html /var/www/html  #comprobamos con df -h
+sudo mount $NFS_SERVER_IP:/var/moodledata /var/moodledata
+
+echo "$NFS_SERVER_IP:/var/www/html /var/www/html nfs auto,nofail,noatime,nolock,intr,tcp,actimeo=1800 0 0" >> /etc/fstab
+echo "$NFS_SERVER_IP:/var/moodledata /var/moodledata /var/www/html nfs auto,nofail,noatime,nolock,intr,tcp,actimeo=1800 0 0" >> /etc/fstab
