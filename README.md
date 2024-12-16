@@ -28,8 +28,6 @@
 
 ![ail9fJb234](https://github.com/user-attachments/assets/9fbd8ccd-3050-45ce-9eb8-0f5cddd1f4ce)
 
-![mlqKn6QyNa](https://github.com/user-attachments/assets/21068bac-ed31-4846-afd6-7e3c767d2263)
-
 ![vaP0fUyPxb](https://github.com/user-attachments/assets/beeb8b03-41d7-4abd-bbbb-5db30a76db73)
 
 #sitio funcionando
