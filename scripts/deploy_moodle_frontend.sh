@@ -5,44 +5,25 @@ set -ex
 # Variables de entorno - asume que ya has configurado las variables en tu archivo .env
 source .env
 
-# Eliminamos las descargas previas de Moodle en /tmp
-rm -rf /tmp/moodle-latest-405.tgz*
+sudo chown -R www-data:www-data /var/www/html
+sudo chown -R www-data:www-data /var/moodledata
+sudo chmod -R 755 /var/www/html
+sudo chmod -R 755 /var/moodledata
 
-# Descargamos la última versión estable de Moodle
-wget https://download.moodle.org/download.php/direct/stable405/moodle-latest-405.tgz -P /tmp
+# Configuración recomendada de PHP
+sudo sed -i 's/^;*max_execution_time\s*=.*/max_execution_time = 300/' /etc/php/8.3/apache2/php.ini
+sudo sed -i 's/^;*memory_limit\s*=.*/memory_limit = 256M/' /etc/php/8.3/apache2/php.ini
+sudo sed -i 's/^;*post_max_size\s*=.*/post_max_size = 50M/' /etc/php/8.3/apache2/php.ini
+sudo sed -i 's/^;*upload_max_filesize\s*=.*/upload_max_filesize = 50M/' /etc/php/8.3/apache2/php.ini
 
-# Extraemos el archivo descargado
-tar -xzf /tmp/moodle-latest-405.tgz -C /tmp
-
-# Preparamos el directorio de instalación de Moodle
-sudo mkdir -p $MOODLE_DIRECTORY
-# Eliminamos cualquier archivo o instalación previa en el directorio de Moodle
-sudo rm -rf $MOODLE_DIRECTORY/*
-
-# Movemos los archivos extraídos al directorio de instalación de Moodle
-mv /tmp/moodle/* "$MOODLE_DIRECTORY"
-
-# Cambiar los permisos de Moodle
-chown -R www-data:www-data "$MOODLE_DIRECTORY"
-chmod -R 755 "$MOODLE_DIRECTORY"
-
-# Copiamos el archivo .htaccess para configurar el acceso y seguridad en el servidor web
-cp ../htaccess/.htaccess "$MOODLE_DIRECTORY"
-
-# Copiamos el archivo de configuración de Apache
-cp ../conf/000-default.conf /etc/apache2/sites-available/000-default.conf
-
-# Crear el directorio de datos de Moodle
-chown -R www-data:www-data /var/www/moodledata
-chmod -R 755 /var/www/moodledata
-
-# Instalamos las extensiones php requeridas para Moodle
-sudo apt remove -y php-curl php-zip php-xml php-mbstring php-gd
-sudo apt install -y php-curl php-zip php-xml php-mbstring php-gd
+# Hacer lo mismo para la configuración de PHP CLI
+sudo sed -i 's/^;*max_execution_time\s*=.*/max_execution_time = 300/' /etc/php/8.3/cli/php.ini
+sudo sed -i 's/^;*memory_limit\s*=.*/memory_limit = 256M/' /etc/php/8.3/cli/php.ini
+sudo sed -i 's/^;*post_max_size\s*=.*/post_max_size = 50M/' /etc/php/8.3/cli/php.ini
+sudo sed -i 's/^;*upload_max_filesize\s*=.*/upload_max_filesize = 50M/' /etc/php/8.3/cli/php.ini
 
 # Reiniciamos Apache para aplicar las nuevas extensiones PHP
 systemctl restart apache2
-
 
 # Ejecutar la instalación de Moodle sin interacción
 sudo -u www-data php "$MOODLE_DIRECTORY/admin/cli/install.php" \
@@ -59,7 +40,7 @@ sudo -u www-data php "$MOODLE_DIRECTORY/admin/cli/install.php" \
   --summary="$MOODLE_SUMMARY" \
   --adminuser="$MOODLE_ADMIN" \
   --adminpass="$MOODLE_ADMINPASS" \
-  --adminemail="$MOODLE_ADMINemail" \
+  --adminemail="$MOODLE_ADMINEMAIL" \
   --non-interactive \
   --agree-license
 
@@ -80,12 +61,10 @@ sudo apachectl configtest
 # Reiniciar Apache para aplicar los cambios de SSL y redirección
 sudo systemctl restart apache2
 
-# Verificar estado de Apache
-sudo systemctl status apache2
-
 echo "Instalación y configuración completa. Moodle debería estar funcionando correctamente en $MOODLE_URL"
 
-sed -i "/\$CFG->admin/a \$CFG->reverseproxy=1;\n\$CFG->sslproxy=1;" /var/www/html/wp-config.php
+# Configuración para el servidor detrás de un proxy inverso
+sed -i "/\$CFG->admin/a \$CFG->reverseproxy=1;\n\$CFG->sslproxy=1;" /var/www/html/config.php
 
-# Reiniciar el servicio de Apache 
-systemctl restart apache2 
+# Reiniciar el servicio de Apache
+systemctl restart apache2
