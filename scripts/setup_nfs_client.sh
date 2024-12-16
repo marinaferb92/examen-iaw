@@ -14,4 +14,4 @@ apt update
 apt install nfs-common -y
 
 sudo mount $IP_NFS_SERVER:/var/www/html /var/www/html  #comprobamos con df -h
-
+sudo mount $IP_NFS_SERVER:/var/moodledata /var/moodledata
