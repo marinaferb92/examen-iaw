@@ -7,7 +7,7 @@ set -ex
 source .env
 
 # Actualizamos el sistema
-apt update
+apt update --fix-missing
 
 # Actualiza paquetes
 apt upgrade -y  
@@ -28,7 +28,7 @@ cp ../conf/loadbalancer.conf /etc/nginx/sites-available/
 sed -i "s/IP_FRONTEND_1/$IP_FRONTEND_1/" /etc/nginx/sites-available/loadbalancer.conf
 sed -i "s/IP_FRONTEND_2/$IP_FRONTEND_2/" /etc/nginx/sites-available/loadbalancer.conf
 
-SED -I "s/LE_DOMAIN/$LE_DOMAIN/" /etc/nginx/sites-available/loadbalancer.conf
+sed -i "s/LE_DOMAIN/$LE_DOMAIN/" /etc/nginx/sites-available/loadbalancer.conf
 
 # Hacemos el enlace simbólico al sitio habilitado
 if [ ! -f "/etc/nginx/sites-available/loadbalancer.conf" ]; then
