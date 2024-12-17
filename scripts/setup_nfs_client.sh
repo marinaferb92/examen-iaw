@@ -1,5 +1,5 @@
 #!/bin/bash
-# Configuración para mostrar los comandos y detener en caso de error
+
 set -ex
 
 # Importamos el archivo .env
